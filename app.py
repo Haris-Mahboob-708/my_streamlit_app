@@ -17,8 +17,7 @@ st.set_page_config(page_title="MILP Predictor", layout="wide")
 st.sidebar.header("MILP Configuration")
 st.sidebar.write("Enter your parameters below:")
 
-# CHANGED: Switched from 'slider' to 'number_input' to remove limits
-# we keep 'min_value=0.0' to prevent negative numbers, but removed 'max_value'
+# Inputs (Unlimited values)
 feed = st.sidebar.number_input("Feed (kg)", min_value=0.0, value=30.0, step=0.5)
 time = st.sidebar.number_input("Milking Time (min)", min_value=0.0, value=10.0, step=0.5)
 thi = st.sidebar.number_input("THI (Temp-Humidity Index)", min_value=0.0, value=70.0, step=0.1)
@@ -36,8 +35,8 @@ with col1:
     input_data = np.array([[feed, time, thi]])
     prediction = model.predict(input_data)[0]
     
-    # Display big metric
-    st.metric(label="Predicted Output", value=f"{prediction:.2f}")
+    # Display big metric WITH UNIT
+    st.metric(label="Predicted Output", value=f"{prediction:.2f} Litres")
 
     # Interpretation Logic
     if prediction > 20:
